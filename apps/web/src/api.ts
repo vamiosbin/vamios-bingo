@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL || "http://localhost:3001";
+const API = import.meta.env.VITE_API_URL || "https://vamios-api.onrender.com";
 
 let token = localStorage.getItem("vamios_token") || "";
 
