@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      PORT: 3001
+      WEB_ORIGIN: http://localhost:5173
+      JWT_SECRET: change-me
+      DATABASE_FILE: /app/data/vamios.db
+    ports:
+      - "3001:3001"
+    volumes:
+      - vamios-data:/app/data
+
+  bot:
+    build:
+      context: .
+      dockerfile: apps/bot/Dockerfile
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      WEB_APP_URL: ${WEB_APP_URL}
+    depends_on:
+      - api
+
+volumes:
+  vamios-data:

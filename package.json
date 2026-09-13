@@ -1,0 +1,24 @@
+{
+  "name": "vamios-bingo",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm --workspace apps/api run dev",
+    "dev:web": "npm --workspace apps/web run dev",
+    "dev:bot": "npm --workspace apps/bot run dev",
+    "build": "npm run build:shared && npm run build:api && npm run build:web && npm run build:bot",
+    "build:shared": "npm --workspace packages/shared run build",
+    "build:api": "npm --workspace apps/api run build",
+    "build:web": "npm --workspace apps/web run build",
+    "build:bot": "npm --workspace apps/bot run build",
+    "start:api": "npm --workspace apps/api run start",
+    "start:bot": "npm --workspace apps/bot run start"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
