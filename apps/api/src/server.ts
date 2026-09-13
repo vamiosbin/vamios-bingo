@@ -87,7 +87,7 @@ app.post("/api/games", auth, (req:AuthRequest,res) => {
 app.post("/api/games/:id/join", auth, (req:AuthRequest,res) => {
   try {
     const { boardId } = req.body;
-    const current = gameState(req.params.id);
+    const current = gameState(String(req.params.id));
     if (!current) return res.status(404).json({error:"Game not found"});
     const state = createOrJoinGame(req.userId!, current.stake, Number(boardId));
     broadcast(state.id);
@@ -96,21 +96,21 @@ app.post("/api/games/:id/join", auth, (req:AuthRequest,res) => {
 });
 
 app.get("/api/games/:id", auth, (req,res) => {
-  const state = gameState(req.params.id);
+  const state = gameState(String(req.params.id));
   if (!state) return res.status(404).json({error:"Game not found"});
   res.json(state);
 });
 
 app.post("/api/games/:id/mark", auth, (req:AuthRequest,res) => {
   try {
-    res.json(markNumber(req.userId!, req.params.id, Number(req.body.number)));
+    res.json(markNumber(req.userId!, String(req.params.id), Number(req.body.number)));
   } catch(e:any) { res.status(400).json({error:e.message}); }
 });
 
 app.post("/api/games/:id/bingo", auth, (req:AuthRequest,res) => {
   try {
-    const state = claimBingo(req.userId!, req.params.id);
-    broadcast(req.params.id);
+    const state = claimBingo(req.userId!, String(req.params.id));
+    broadcast(String(req.params.id));
     res.json(state);
   } catch(e:any) { res.status(400).json({error:e.message}); }
 });
